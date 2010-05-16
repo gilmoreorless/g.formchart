@@ -11,7 +11,7 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
         teamlen = values.length,
 		roundlen = values[0].length,
 		roundW = width / (roundlen - 1),
-		teamH = height / teamlen,
+		teamH = height / (teamlen / 2),
 		lossH = teamH * .15,
 		X,
 		Y = y,
@@ -31,6 +31,9 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 			var cellV = values[t][r],
 				cellH = cellV ? cellV === 1 ? teamH / 2 : teamH - lossH : lossH,
 				cellY = (maxY[r] || Y);// + (teamH - cellH) / 2;
+			if (cellV === undefined) {
+				continue;
+			}
 			if (r) {
 				pathT.push(X, cellY);
 			} else {

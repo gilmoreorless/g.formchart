@@ -7,7 +7,7 @@
         <script src="../../../Github/DmitryBaranovskiy/g.raphael/g.raphael.js" type="text/javascript" charset="utf-8"></script>
         <script src="form-chart-static.js" type="text/javascript" charset="utf-8"></script>
         <style type="text/css">
-        #holder {width:1401px; height:601px; margin:50px;}
+        #holder {width:1401px; height:801px; margin:50px;}
         </style>
         <script type="text/javascript" charset="utf-8">
             window.onload = function () {
@@ -24,17 +24,29 @@
 				};
 
                 var r = window.r = Raphael("holder"),
-                	//teams = {"Adelaide":[2,0,2,0,2,0,0,0,2,2,2,2,2,2,2,0,2,0,0,2,2,2],"Brisbane":[2,0,2,0,0,2,2,2,0,2,0,2,2,0,2,2,2,0,1,0,2,2],"Carlton":[2,2,0,0,2,0,0,2,0,2,2,0,0,2,2,2,0,2,2,2,2,0]},
-					//teams = {"Adelaide":[0,0,0,1,0,0,2],"Brisbane":[2,2,2,2,0,0,0],"Carlton":[2,0,0,2,2,0,2]},
-					//teams = {"Adelaide":[0,0,0,0,0,0,2],"Brisbane Lions":[2,2,2,2,0,0,0],"Carlton":[2,0,0,2,2,0,2],"Collingwood":[2,2,0,2,2,2,2],"Essendon":[0,0,2,0,0,2,0],"Fremantle":[2,2,2,0,2,2,2],"Geelong":[2,2,0,2,0,2,2],"Hawthorn":[2,0,0,0,0,0,0],"Melbourne":[0,0,2,2,2,0,0],"North Melbourne":[0,0,2,0,2,2,0],"Port Adelaide":[2,2,0,0,2,2,2],"Richmond":[0,0,0,0,0,0,0],"St Kilda":[2,2,2,2,0,2,0],"Sydney":[0,2,2,2,2,2,0],"West Coast":[0,0,0,2,0,0,2],"Western Bulldogs":[0,2,2,0,2,0,2]},
-					teams = {"Adelaide":[2,0,2,0,2,0,0,0,2,2,2,2,2,2,2,0,2,0,0,2,2,2],"Brisbane Lions":[2,0,2,0,0,2,2,2,0,2,0,2,2,0,2,2,2,0,1,0,2,2],"Carlton":[2,2,0,0,2,0,0,2,0,2,2,0,0,2,2,2,0,2,2,2,2,0],"Collingwood":[0,2,0,2,0,2,0,0,2,2,2,2,2,2,2,0,2,2,2,2,2,0],"Essendon":[0,2,2,0,2,0,2,0,2,0,0,2,2,0,2,0,0,0,1,2,0,2],"Fremantle":[0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,0,2,0,2,0],"Geelong":[2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,0,2,0,2],"Hawthorn":[0,0,2,0,2,2,0,2,2,0,2,0,0,0,2,2,0,0,0,0,2,0],"Melbourne":[0,0,0,2,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,2,0,0],"North Melbourne":[2,0,0,2,0,0,2,0,2,0,0,0,0,0,0,1,0,0,2,0,2,2],"Port Adelaide":[2,0,2,2,0,2,0,2,0,0,2,0,0,2,0,2,0,2,0,0,0,0],"Richmond":[0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,1,2,2,0,0,0,0],"St Kilda":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2],"Sydney":[0,2,0,2,0,2,0,2,2,0,0,0,0,2,0,0,2,0,2,0,0,0],"West Coast":[0,2,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,2,2,2,0,2],"Western Bulldogs":[2,2,2,0,0,0,2,2,0,2,2,2,2,2,0,2,0,2,0,2,2,2]},
-					newTeams = makeArray(teams),
-					chartW = 60 * (newTeams[0].length - 1),
-					chartH = 40 * newTeams.length;
+					teams = [
+						// 2009
+						{"Adelaide":[2,0,2,0,2,0,0,0,2,2,2,2,2,2,2,0,2,0,0,2,2,2],"Brisbane Lions":[2,0,2,0,0,2,2,2,0,2,0,2,2,0,2,2,2,0,1,0,2,2],"Carlton":[2,2,0,0,2,0,0,2,0,2,2,0,0,2,2,2,0,2,2,2,2,0],"Collingwood":[0,2,0,2,0,2,0,0,2,2,2,2,2,2,2,0,2,2,2,2,2,0],"Essendon":[0,2,2,0,2,0,2,0,2,0,0,2,2,0,2,0,0,0,1,2,0,2],"Fremantle":[0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,0,2,0,2,0],"Geelong":[2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,0,2,0,2],"Hawthorn":[0,0,2,0,2,2,0,2,2,0,2,0,0,0,2,2,0,0,0,0,2,0],"Melbourne":[0,0,0,2,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,2,0,0],"North Melbourne":[2,0,0,2,0,0,2,0,2,0,0,0,0,0,0,1,0,0,2,0,2,2],"Port Adelaide":[2,0,2,2,0,2,0,2,0,0,2,0,0,2,0,2,0,2,0,0,0,0],"Richmond":[0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,1,2,2,0,0,0,0],"St Kilda":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2],"Sydney":[0,2,0,2,0,2,0,2,2,0,0,0,0,2,0,0,2,0,2,0,0,0],"West Coast":[0,2,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,2,2,2,0,2],"Western Bulldogs":[2,2,2,0,0,0,2,2,0,2,2,2,2,2,0,2,0,2,0,2,2,2]},
+						// 2010
+						{"Adelaide":[0,0,0,0,0,0,2,0],"Brisbane Lions":[2,2,2,2,0,0,0,0],"Carlton":[2,0,0,2,2,0,2],"Collingwood":[2,2,0,2,2,2,2,2],"Essendon":[0,0,2,0,0,2,0],"Fremantle":[2,2,2,0,2,2,2,0],"Geelong":[2,2,0,2,0,2,2,2],"Hawthorn":[2,0,0,0,0,0,0,2],"Melbourne":[0,0,2,2,2,0,0,0],"North Melbourne":[0,0,2,0,2,2,0,2],"Port Adelaide":[2,2,0,0,2,2,2],"Richmond":[0,0,0,0,0,0,0,0],"St Kilda":[2,2,2,2,0,2,0],"Sydney":[0,2,2,2,2,2,0,0],"West Coast":[0,0,0,2,0,0,2,2],"Western Bulldogs":[0,2,2,0,2,0,2,2]}
+					],
+					colours = ["#2E66B1", "#7A0135", "#002D56", "#000", "#E30C1B", "#592D7A", "#002A5C", "#572600", "#00234B", "#4081BD", "#019FAE", "#FFDB45", "#F8F0F0", "#F00", "#F6C646", "#005DAB"],
+					newTeams,
+					chartY = 20,
+					chartW,
+					chartH;
 				//log(teams);
 				r.grid(20);
                 //r.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-				r.g.formchart(20, 20, chartW, chartH, newTeams);
+				for (var i = 0, ii = teams.length; i < ii; i++) {
+					newTeams = makeArray(teams[i]);
+					chartW = 60 * (newTeams[0].length - 1);
+					chartH = 20 * newTeams.length;
+					r.rect(20, chartY, chartW, chartH).attr({stroke:'none',fill:'#0F0'}); // background rectangle for testing
+					r.g.formchart(20, chartY, chartW, chartH, newTeams, {colors: colours});
+					log(chartH, chartY);
+					chartY += chartH + 40;
+				}
             };
         </script>
     </head>
