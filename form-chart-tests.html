@@ -3,8 +3,8 @@
     <head>
         <title>Footy Form Charts</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <script src="../../../Github/DmitryBaranovskiy/raphael/raphael.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../../Github/DmitryBaranovskiy/g.raphael/g.raphael.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../DmitryBaranovskiy/raphael/raphael.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../DmitryBaranovskiy/g.raphael/g.raphael.js" type="text/javascript" charset="utf-8"></script>
         <script src="form-chart-static.js" type="text/javascript" charset="utf-8"></script>
         <style type="text/css">
         #holder {width:1401px; height:801px; margin:50px;}
@@ -44,7 +44,7 @@
 					chartH = 20 * newTeams.length;
 					r.rect(20, chartY, chartW, chartH).attr({stroke:'none',fill:'#0F0'}); // background rectangle for testing
 					r.g.formchart(20, chartY, chartW, chartH, newTeams, {colors: colours});
-					log(chartH, chartY);
+					//log(chartH, chartY);
 					chartY += chartH + 40;
 				}
             };
