@@ -27,5 +27,6 @@ Usage
 
 ### Options
 	options = {
-		colors: ["red", "hsb(1,2,3)", ...] // array - optional - colours to use for the chart bars
+		border: bool/string/object, // false = no border, true = 1px black border, string = 1px border of specified colour, object = Raphael attr object for border
+		colors: ["red", "hsb(.1, .2, .3)", ...] // array - optional - colours to use for the chart bars
 	};

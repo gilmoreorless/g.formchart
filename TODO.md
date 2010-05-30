@@ -5,7 +5,7 @@ Main Functionality
 ---
 
 * Add round/team labels (inside or outside width/height bounds?)
-* Add border
+* Make border wrap to outer edges of team paths instead of just being a rect
 * Add hover states/labels
 
 Extra Features

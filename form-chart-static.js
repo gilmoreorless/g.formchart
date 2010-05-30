@@ -4,8 +4,10 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
     opts = opts || {};
     var chart = this.set(),
         bars = this.set(),
-//        covers = this.set(),
-//        covers2 = this.set(),
+		border,
+		borderAttrs = {stroke: "#000", fill: "#000", "fill-opacity": 0},
+		roundLabels,
+		teamLabels,
         paper = this,
         colors = opts.colors || this.g.colors,
 		isSimple = Raphael.is(values[0], 'array'),
@@ -26,6 +28,7 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 		fout = function () {
 //			this.flag.animate({opacity: 0}, 300, function () {this.remove();});
 		};
+
 	// Loop through the teams and build their path objects
 	for (var t = 0; t < teamlen; t++) {
 		X = x;
@@ -33,7 +36,7 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 		var pathT = ['M', x],
 			pathB = [],
 			team = values[t],
-			teamName = !isSimple && team.name || "Team " + (t + 1),
+			teamName = !isSimple && team.name || 'Team ' + (t + 1),
 			teamResults = isSimple ? team : team.results,
 			teamColor = !isSimple && team.color || colors[colorIndex];
 		// Work out top/bottom position of path at each round
@@ -55,7 +58,7 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 		}
 		// Finalise the path and create object
 		pathT = pathT.concat(pathB.reverse(), 'z');
-		bar = this.path(pathT.join(' ')).attr({stroke: teamColor, fill: teamColor}).hover(fin, fout);
+		bar = this.path(pathT).attr({stroke: teamColor, fill: teamColor});//.hover(fin, fout);
 		bar.data = {
 //			x: x,
 //			y: cellY,
@@ -81,7 +84,39 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 		}
 	}
 
-	return bars;
+	// Add border
+	if (opts.border !== false) {
+		if (Raphael.is(opts.border, 'string')) {
+			borderAttrs.stroke = opts.border;
+		} else if (Raphael.is(opts.border, 'object')) {
+			borderAttrs = opts.border;
+		}
+		border = this.rect(x, y, width, height).attr(borderAttrs);
+	}
+
+	// Event handling functions copied from g.bar.js
+	chart.hover = function (fin, fout) {
+		bars.hover(fin, fout);
+		return this;
+	};
+	chart.click = function (f) {
+		bars.click(f);
+		return this;
+	};
+	chart.each = function (f) {
+		if (!Raphael.is(f, "function")) {
+			return this;
+		}
+		for (var i = bars.length; i--;) {
+			f.call(bars[i]);
+		}
+		return this;
+	};
+	chart.push(bars, border);
+	chart.bars = bars;
+	chart.border = border;
+
+	return chart;
 };
 
 Raphael.fn.grid = function (x, y, colour) {
