@@ -4,7 +4,6 @@ TODO
 Main Functionality
 ---
 
-* Decision: make colour/label options part of a large values object, or a separate options object? (or support both?)
 * Add round/team labels (inside or outside width/height bounds?)
 * Add border
 * Add hover states/labels

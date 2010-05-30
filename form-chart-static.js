@@ -8,8 +8,9 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 //        covers2 = this.set(),
         paper = this,
         colors = opts.colors || this.g.colors,
+		isSimple = Raphael.is(values[0], 'array'),
         teamlen = values.length,
-		roundlen = values[0].length,
+		roundlen = (isSimple ? values[0] : values[0].results).length,
 		roundW = width / (roundlen - 1),
 		teamH = height / (teamlen / 2),
 		lossH = teamH * .15,
@@ -17,23 +18,27 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 		Y = y,
 		maxY = [],
 		bar,
-		colour = 0,
+		colorIndex = 0,
 		fin = function () {
-			console.log(this);
-			//this.flag = paper.g.popup(this.bar.x, this.bar.y, this.bar.value || "0").insertBefore(this);
+			//console.log(this);
+//			this.flag = paper.g.popup(this.data.x, this.data.y, this.data.name || "(name)").insertBefore(this);
 		},
 		fout = function () {
-			//this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+//			this.flag.animate({opacity: 0}, 300, function () {this.remove();});
 		};
 	// Loop through the teams and build their path objects
 	for (var t = 0; t < teamlen; t++) {
 		X = x;
 		// Top and bottom co-ordinates are built separately then joined later
 		var pathT = ['M', x],
-			pathB = [];
+			pathB = [],
+			team = values[t],
+			teamName = !isSimple && team.name || "Team " + (t + 1),
+			teamResults = isSimple ? team : team.results,
+			teamColor = !isSimple && team.color || colors[colorIndex];
 		// Work out top/bottom position of path at each round
 		for (var r = 0; r < roundlen; r++) {
-			var cellV = values[t][r],
+			var cellV = teamResults[r],
 				cellH = cellV ? cellV === 1 ? teamH / 2 : teamH - lossH : lossH,
 				cellY = (maxY[r] || Y);
 			if (cellV === undefined) {
@@ -49,20 +54,25 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 			maxY[r] = cellY + cellH;
 		}
 		// Finalise the path and create object
-		pathT = pathT.concat(pathB.reverse());
-		pathT.push('z');
-		bars[t] = this.path(pathT.join(' ')).attr({stroke: colors[colour], fill: colors[colour]}).hover(fin, fout);
-
+		pathT = pathT.concat(pathB.reverse(), 'z');
+		bar = this.path(pathT.join(' ')).attr({stroke: teamColor, fill: teamColor}).hover(fin, fout);
+		bar.data = {
+//			x: x,
+//			y: cellY,
+			name: teamName,
+			results: teamResults
+		}
+		bars[t] = bar;
 		// Get the next colour
-		colour++;
-		if (!colors[colour]) {
-			colour = 0;
+		colorIndex++;
+		if (!colors[colorIndex]) {
+			colorIndex = 0;
 		}
 	}
 	// Check if any paths go outside the defined bounds of the grid
 	// This can happen if there is an odd number of teams
 	Y = Math.max.apply(Math, maxY);
-	log(Y)
+//	log(Y);
 	if (Y > y + height) {
 		var scaleY = height / (Y - y);
 		log(scaleY, y, Y, y + height)

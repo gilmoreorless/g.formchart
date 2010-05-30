@@ -15,7 +15,7 @@
 					var newArr = [];
 					for (var p in obj) if (obj.hasOwnProperty(p)) {
 						if (Raphael.is(obj[p], "object") && deep === true) {
-							newArr.push(makeArray(obj[p]));
+							newArr.push(makeArray(obj[p], deep));
 						} else {
 							newArr.push(obj[p]);
 						}
@@ -26,9 +26,73 @@
                 var r = window.r = Raphael("holder"),
 					teams = [
 						// 2009
-						{"Adelaide":[2,0,2,0,2,0,0,0,2,2,2,2,2,2,2,0,2,0,0,2,2,2],"Brisbane Lions":[2,0,2,0,0,2,2,2,0,2,0,2,2,0,2,2,2,0,1,0,2,2],"Carlton":[2,2,0,0,2,0,0,2,0,2,2,0,0,2,2,2,0,2,2,2,2,0],"Collingwood":[0,2,0,2,0,2,0,0,2,2,2,2,2,2,2,0,2,2,2,2,2,0],"Essendon":[0,2,2,0,2,0,2,0,2,0,0,2,2,0,2,0,0,0,1,2,0,2],"Fremantle":[0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,0,2,0,2,0],"Geelong":[2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,0,2,0,2],"Hawthorn":[0,0,2,0,2,2,0,2,2,0,2,0,0,0,2,2,0,0,0,0,2,0],"Melbourne":[0,0,0,2,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,2,0,0],"North Melbourne":[2,0,0,2,0,0,2,0,2,0,0,0,0,0,0,1,0,0,2,0,2,2],"Port Adelaide":[2,0,2,2,0,2,0,2,0,0,2,0,0,2,0,2,0,2,0,0,0,0],"Richmond":[0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,1,2,2,0,0,0,0],"St Kilda":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2],"Sydney":[0,2,0,2,0,2,0,2,2,0,0,0,0,2,0,0,2,0,2,0,0,0],"West Coast":[0,2,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,2,2,2,0,2],"Western Bulldogs":[2,2,2,0,0,0,2,2,0,2,2,2,2,2,0,2,0,2,0,2,2,2]},
+						makeArray({"Adelaide":[2,0,2,0,2,0,0,0,2,2,2,2,2,2,2,0,2,0,0,2,2,2],"Brisbane Lions":[2,0,2,0,0,2,2,2,0,2,0,2,2,0,2,2,2,0,1,0,2,2],"Carlton":[2,2,0,0,2,0,0,2,0,2,2,0,0,2,2,2,0,2,2,2,2,0],"Collingwood":[0,2,0,2,0,2,0,0,2,2,2,2,2,2,2,0,2,2,2,2,2,0],"Essendon":[0,2,2,0,2,0,2,0,2,0,0,2,2,0,2,0,0,0,1,2,0,2],"Fremantle":[0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,0,2,0,2,0],"Geelong":[2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,0,2,0,2],"Hawthorn":[0,0,2,0,2,2,0,2,2,0,2,0,0,0,2,2,0,0,0,0,2,0],"Melbourne":[0,0,0,2,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,2,0,0],"North Melbourne":[2,0,0,2,0,0,2,0,2,0,0,0,0,0,0,1,0,0,2,0,2,2],"Port Adelaide":[2,0,2,2,0,2,0,2,0,0,2,0,0,2,0,2,0,2,0,0,0,0],"Richmond":[0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,1,2,2,0,0,0,0],"St Kilda":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2],"Sydney":[0,2,0,2,0,2,0,2,2,0,0,0,0,2,0,0,2,0,2,0,0,0],"West Coast":[0,2,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,2,2,2,0,2],"Western Bulldogs":[2,2,2,0,0,0,2,2,0,2,2,2,2,2,0,2,0,2,0,2,2,2]}),
 						// 2010
-						{"Adelaide":[0,0,0,0,0,0,2,0],"Brisbane Lions":[2,2,2,2,0,0,0,0],"Carlton":[2,0,0,2,2,0,2,2],"Collingwood":[2,2,0,2,2,2,2,2],"Essendon":[0,0,2,0,0,2,0,2],"Fremantle":[2,2,2,0,2,2,2,0],"Geelong":[2,2,0,2,0,2,2,2],"Hawthorn":[2,0,0,0,0,0,0,2],"Melbourne":[0,0,2,2,2,0,0,0],"North Melbourne":[0,0,2,0,2,2,0,2],"Port Adelaide":[2,2,0,0,2,2,2,0],"Richmond":[0,0,0,0,0,0,0,0],"St Kilda":[2,2,2,2,0,2,0,0],"Sydney":[0,2,2,2,2,2,0,0],"West Coast":[0,0,0,2,0,0,2,2],"Western Bulldogs":[0,2,2,0,2,0,2,2]}
+						[{
+							name: "Adelaide",
+							color: "#2E66B1",
+							results: [0,0,0,0,0,0,2,0]
+						}, {
+							name: "Brisbane Lions",
+							color: "#7A0135",
+							results: [2,2,2,2,0,0,0,0]
+						}, {
+							name: "Carlton",
+							color: "#002D56",
+							results: [2,0,0,2,2,0,2,2]
+						}, {
+							name: "Collingwood",
+							color: "#000",
+							results: [2,2,0,2,2,2,2,2]
+						}, {
+							name: "Essendon",
+							color: "#E30C1B",
+							results: [0,0,2,0,0,2,0,2]
+						}, {
+							name: "Fremantle",
+							color: "#592D7A",
+							results: [2,2,2,0,2,2,2,0]
+						}, {
+							name: "Geelong",
+							color: "#002A5C",
+							results: [2,2,0,2,0,2,2,2]
+						}, {
+							name: "Hawthorn",
+							color: "#572600",
+							results: [2,0,0,0,0,0,0,2]
+						}, {
+							name: "Melbourne",
+							color: "#00234B",
+							results: [0,0,2,2,2,0,0,0]
+						}, {
+							name: "North Melbourne",
+							color: "#4081BD",
+							results: [0,0,2,0,2,2,0,2]
+						}, {
+							name: "Port Adelaide",
+							color: "#019FAE",
+							results: [2,2,0,0,2,2,2,0]
+						}, {
+							name: "Richmond",
+							color: "#FFDB45",
+							results: [0,0,0,0,0,0,0,0]
+						}, {
+							name: "St Kilda",
+							color: "#F8F0F0",
+							results: [2,2,2,2,0,2,0,0]
+						}, {
+							name: "Sydney",
+							color: "#F00",
+							results: [0,2,2,2,2,2,0,0]
+						}, {
+							name: "West Coast",
+							color: "#F6C646",
+							results: [0,0,0,2,0,0,2,2]
+						}, {
+							name: "Western Bulldogs",
+							color: "#005DAB",
+							results: [0,2,2,0,2,0,2,2]
+						}]
 					],
 					colours = ["#2E66B1", "#7A0135", "#002D56", "#000", "#E30C1B", "#592D7A", "#002A5C", "#572600", "#00234B", "#4081BD", "#019FAE", "#FFDB45", "#F8F0F0", "#F00", "#F6C646", "#005DAB"],
 					newTeams,
@@ -39,8 +103,8 @@
 				r.grid(20);
                 //r.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
 				for (var i = 0, ii = teams.length; i < ii; i++) {
-					newTeams = makeArray(teams[i]);
-					chartW = 60 * (newTeams[0].length - 1);
+					newTeams = teams[i];
+					chartW = 60 * ((Raphael.is(newTeams[0], "array") ? newTeams[0] : newTeams[0].results).length - 1);
 					chartH = 20 * newTeams.length;
 					r.rect(20, chartY, chartW, chartH).attr({stroke:'none',fill:'#0F0'}); // background rectangle for testing
 					r.g.formchart(20, chartY, chartW, chartH, newTeams, {colors: colours});
