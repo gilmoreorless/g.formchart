@@ -27,6 +27,9 @@ Usage
 
 ### Options
 	options = {
-		border: bool/string/object, // false = no border, true = 1px black border, string = 1px border of specified colour, object = Raphael attr object for border
-		colors: ["red", "hsb(.1, .2, .3)", ...] // array - optional - colours to use for the chart bars
+		border: bool|string|object, // false = no border, true (default) = 1px black border, string = 1px border of specified colour, object = Raphael attr object for border
+		colors: ["red", "hsb(.1, .2, .3)", ...], // array - optional - colours to use for the chart bars
+		roundLabels: bool|array, // optional - false (default) = no labels, true = numeric labels, array = custom labels
+		teamLabels: bool|array, // optional - false (default) = no labels, true = numeric labels, array = custom labels
+		labelsInside: bool, // optional -round/team labels are added inside (true) or outside (false - default) chart dimensions
 	};

@@ -6,8 +6,8 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
         bars = this.set(),
 		border,
 		borderAttrs = {stroke: "#000", fill: "#000", "fill-opacity": 0},
-		roundLabels,
-		teamLabels,
+		roundLabels = this.set(),
+		teamLabels = this.set(),
         paper = this,
         colors = opts.colors || this.g.colors,
 		isSimple = Raphael.is(values[0], 'array'),
@@ -21,6 +21,8 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 		maxY = [],
 		bar,
 		colorIndex = 0,
+		r,
+		t,
 		fin = function () {
 			//console.log(this);
 //			this.flag = paper.g.popup(this.data.x, this.data.y, this.data.name || "(name)").insertBefore(this);
@@ -29,8 +31,16 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 //			this.flag.animate({opacity: 0}, 300, function () {this.remove();});
 		};
 
+	// Build round labels
+	if (opts.roundLabels) {
+		for (r = 0; r < roundlen; r++) {
+			var roundLabel = opts.roundLabels === true || typeof opts.roundLabels[r] === undefined ? r + 1 : opts.roundLabels[r];
+			roundLabels.push(this.g.label(x + roundW * r, y - 10, roundLabel)); // TODO "y - 10" is only temporary
+		}
+	}
+
 	// Loop through the teams and build their path objects
-	for (var t = 0; t < teamlen; t++) {
+	for (t = 0; t < teamlen; t++) {
 		X = x;
 		// Top and bottom co-ordinates are built separately then joined later
 		var pathT = ['M', x],
@@ -40,7 +50,7 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 			teamResults = isSimple ? team : team.results,
 			teamColor = !isSimple && team.color || colors[colorIndex];
 		// Work out top/bottom position of path at each round
-		for (var r = 0; r < roundlen; r++) {
+		for (r = 0; r < roundlen; r++) {
 			var cellV = teamResults[r],
 				cellH = cellV ? cellV === 1 ? teamH / 2 : teamH - lossH : lossH,
 				cellY = (maxY[r] || Y);
@@ -66,6 +76,11 @@ Raphael.fn.g.formchart = function (x, y, width, height, values, opts) {
 			results: teamResults
 		}
 		bars[t] = bar;
+		// Add team label
+		if (opts.teamLabels) {
+			var teamLabel = opts.teamLabels === true || typeof opts.teamLabels[r] === undefined ? teamName || '' : opts.teamLabels[r];
+			teamLabels.push(this.g.label(X, cellY + cellH / 2, teamLabel));
+		}
 		// Get the next colour
 		colorIndex++;
 		if (!colors[colorIndex]) {

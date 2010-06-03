@@ -107,7 +107,13 @@
 					chartW = 60 * ((Raphael.is(newTeams[0], "array") ? newTeams[0] : newTeams[0].results).length - 1);
 					chartH = 20 * newTeams.length;
 					r.rect(20, chartY, chartW, chartH).attr({stroke:'none',fill:'#0F0'}); // background rectangle for testing
-					r.footy = r.g.formchart(20, chartY, chartW, chartH, newTeams, {colors: colours, border: "#090"});
+					var options = {
+						colors: colours,
+						border: "#090",
+						roundLabels: true,
+						teamLabels: true
+					};
+					r.footy = r.g.formchart(20, chartY, chartW, chartH, newTeams, options);
 					//log(chartH, chartY);
 					chartY += chartH + 40;
 				}
